@@ -26,13 +26,23 @@ const Game = () => {
 
   const triggerKarma = async () => {
     if (loading) return;
+    
     try {
       setLoading(true);
       setClickCount(prev => prev + 1);
-      const res = await axios.post('/api/karma');
+      
+      // 调用API
+      const res = await axios.post('/api/karma', {}, {
+        timeout: 10000, // 10秒超时
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      console.log('API Response:', res.data); // 调试用
       setKarma(res.data.karma_count || 0);
-
-      // Enhanced animation effects
+  
+      // 动画效果保持不变
       fishControls
         .start({ 
           scale: 0.85, 
@@ -48,23 +58,32 @@ const Game = () => {
             transition: { duration: 0.15, type: "spring", stiffness: 300 } 
           })
         );
-
+  
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
-        audioRef.current.play();
+        audioRef.current.play().catch(e => console.log('Audio play failed:', e));
       }
-
-      // Enhanced floating effects
+  
       setBubbles((prev) => [...prev, { 
         id: Date.now(),
         x: Math.random() * 100 - 50,
         rotation: Math.random() * 360
       }]);
-
+  
       createParticles();
-
+  
     } catch (err) {
-      console.error(err);
+      console.error('Karma API Error:', err);
+      // 即使API失败，也显示本地效果
+      setKarma(prev => prev + 1);
+      
+      // 可以添加错误提示
+      setBubbles((prev) => [...prev, { 
+        id: Date.now(),
+        x: Math.random() * 100 - 50,
+        rotation: Math.random() * 360,
+        isError: true // 标记为错误状态
+      }]);
     } finally {
       setLoading(false);
     }

@@ -8,6 +8,7 @@ import UserKarma from './src/models/UserKarma.js';
 
 dotenv.config();
 
+
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/karmacoin';
 
