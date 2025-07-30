@@ -1,0 +1,18 @@
+{
+  "name": "karmacoin",
+  "version": "1.0.0",
+  "description": "KarmaCoin - Cyber Buddhism Enlightenment",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start"
+  },
+  "keywords": ["karmacoin", "blockchain", "wooden-fish", "karma"],
+  "author": "KarmaCoin Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/karmacoin.git"
+  }
+} 
